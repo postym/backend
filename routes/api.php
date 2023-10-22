@@ -28,4 +28,7 @@ Route::get('/carousel/{id}',
 Route::delete('/carousel/{id}',
 [CarouselItemsController::class, 'destroy']
 );
+Route::post('/carousel',
+[CarouselItemsController::class, 'store']
+);
 

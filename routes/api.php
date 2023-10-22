@@ -25,4 +25,7 @@ Route::get('/carousel',
 Route::get('/carousel/{id}',
 [CarouselItemsController::class, 'show']
 );
+Route::delete('/carousel/{id}',
+[CarouselItemsController::class, 'destroy']
+);
 

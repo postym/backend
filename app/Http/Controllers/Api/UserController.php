@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\UserRequest;
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use Illuminate\Http\Requests;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -19,9 +21,17 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+         {
+            //Retrieve validated resource in storage
+            $validated = $request ->validated();
+
+            $validated['password'] = Hash::make($validated['password']);
+    
+            $user = User::create($validated);
+            return $user;
+        }
     }
 
     /**
@@ -29,17 +39,55 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        return User::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
-        //
+        
+
+            $user = User::findOrFail($id);
+
+            $validated = $request ->validated();
+
+            $user->name = $validated['name'];
+
+            $user->save();
+                    
+                    return $user;
+        
     }
 
+    public function email(UserRequest $request, string $id)
+    {
+
+        $user = User::findOrFail($id);
+
+        $validated = $request ->validated();
+
+        $user->email = $validated['email'];
+
+        $user->save();
+                
+                return $user;
+    }
+
+    public function password(UserRequest $request, string $id){
+
+        $user = User::findOrFail($id);
+
+        $validated = $request ->validated();
+
+        $user->password = Hash::make($validated['password']);
+
+        $user->save();
+                
+                return $user;
+    
+    }
     /**
      * Remove the specified resource from storage.
      */

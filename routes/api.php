@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CarouselItemsController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,3 +60,16 @@ Route::put('/user/email/{id}',
 Route::put('/user/password/{id}',
 [UserController::class, 'password']
 )->name('user.password');
+
+
+
+
+//User
+Route::get('/message', [MessageController::class, 'index']);
+//show
+Route::get('/message/{id}', [MessageController::class, 'show']);
+//delete
+Route::delete('/message/{id}', [MessageController::class, 'destroy']);
+//store
+Route::post('/message', [MessageController::class, 'store']);
+
